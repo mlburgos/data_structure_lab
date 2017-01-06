@@ -63,12 +63,6 @@ def sort_by_cohort(filename):
     # using "info = open(filename)" and then using "info" in the 
     # for loops of the various list comprehensions doesn't work because...
     # I have no idea 
-
-    # print info
-
-    # all_students = sorted([get_name(line) for line in lines if get_cohort(line) == "Fall 2015"])
-
-    # print info
     
     winter_16 = sorted([get_name(line) for line in lines if get_cohort(line) == "Winter 2016"])
     spring_16 = sorted([get_name(line) for line in lines if get_cohort(line) == "Spring 2016"])
@@ -82,14 +76,9 @@ def sort_by_cohort(filename):
                     ]
 
     ghosts = sorted([get_name(line) for line in lines if get_cohort(line) == "G"])
-
-    
-
+ 
     return all_students
 
-
-
- 
 
 
 def students_by_house(filename):
