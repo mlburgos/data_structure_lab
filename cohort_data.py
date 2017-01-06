@@ -28,6 +28,13 @@ def get_name(line):
     return name_list[0] + " " + name_list[1]
 
 
+def get_house(line):
+    """Return house."""
+    
+    return line.rstrip().split("|")[2]
+
+
+
 def get_cohort(line):
     """Return cohort."""
 
@@ -35,7 +42,7 @@ def get_cohort(line):
 
     return cohort
 
-print get_cohort("Harry|Potter|Gryffindor|McGonagall|Fall 2015")
+# print get_cohort("Harry|Potter|Gryffindor|McGonagall|Fall 2015")
 
 def sort_by_cohort(filename):
     """TODO: Sort students by cohort, skipping instructors.
@@ -55,17 +62,9 @@ def sort_by_cohort(filename):
     info = open(filename)
 
 
-    # all_students = sorted([line.rstrip() for line in info if line.rstrip().split("|")[2] != ""])
-    all_students = [[],[],[],[]]
-    for line in info:
-        if get_cohort(line) == "Fall 2015":
-            all_students[0].append(get_name(line))
-    for cohort in all_students:
-        all_students = sorted(cohort)
-    print cohort
-
-    winter_16 = sorted([get_name(line) for line in info if line.rstrip().split("|")[-1] == "Fall 2015"])
-    spring_16 = []
+    all_students = sorted([get_name(line) for line in info if get_cohort(line) == "Fall 2015"])
+    winter_16    = sorted([get_name(line) for line in info if get_cohort(line) == "Fall 2015"])
+    spring_16    = sorted([get_name(line) for line in info if get_cohort(line) == "Fall 2015"])
     summer_16 = []
     fall_15 = []
     ghosts = []
@@ -73,6 +72,22 @@ def sort_by_cohort(filename):
     # Code goes here
 
     return all_students
+
+
+    
+    # all_students = [[],[],[],[]]
+
+    # for line in info:
+    #     if get_cohort(line) == "Fall 2015":
+    #         all_students[0].append(get_name(line))
+    
+
+    # for cohort in all_students:
+    #     all_students = sorted(cohort)
+    # print cohort
+
+
+ 
 
 
 def students_by_house(filename):
