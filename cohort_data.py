@@ -59,32 +59,34 @@ def sort_by_cohort(filename):
 
     """
 
-    info = open(filename)
+    lines = [line.rstrip() for line in open(filename)]
+    # using "info = open(filename)" and then using "info" in the 
+    # for loops of the various list comprehensions doesn't work because...
+    # I have no idea 
 
+    # print info
 
-    all_students = sorted([get_name(line) for line in info if get_cohort(line) == "Fall 2015"])
-    winter_16    = sorted([get_name(line) for line in info if get_cohort(line) == "Fall 2015"])
-    spring_16    = sorted([get_name(line) for line in info if get_cohort(line) == "Fall 2015"])
-    summer_16 = []
-    fall_15 = []
-    ghosts = []
+    # all_students = sorted([get_name(line) for line in lines if get_cohort(line) == "Fall 2015"])
 
-    # Code goes here
+    # print info
+    
+    winter_16 = sorted([get_name(line) for line in lines if get_cohort(line) == "Winter 2016"])
+    spring_16 = sorted([get_name(line) for line in lines if get_cohort(line) == "Spring 2016"])
+    summer_16 = sorted([get_name(line) for line in lines if get_cohort(line) == "Summer 2016"])
+    fall_15 = sorted([get_name(line) for line in lines if get_cohort(line) == "Fall 2015"])
+
+    all_students = [fall_15, 
+                    winter_16, 
+                    spring_16, 
+                    summer_16,
+                    ]
+
+    ghosts = sorted([get_name(line) for line in lines if get_cohort(line) == "G"])
+
+    
 
     return all_students
 
-
-    
-    # all_students = [[],[],[],[]]
-
-    # for line in info:
-    #     if get_cohort(line) == "Fall 2015":
-    #         all_students[0].append(get_name(line))
-    
-
-    # for cohort in all_students:
-    #     all_students = sorted(cohort)
-    # print cohort
 
 
  
