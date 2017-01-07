@@ -20,12 +20,18 @@ def unique_houses(filename):
     return houses
 
 
-def get_name(line):
+def get_full_name(line):
     """Return first and last name as a string."""
 
     name_list = line.rstrip().split("|")[0:2]    
 
     return name_list[0] + " " + name_list[1]
+
+def get_last_name(line):
+    """Return first and last name as a string."""
+
+    return line.rstrip().split("|")[1] 
+
 
 
 def get_house(line):
@@ -54,29 +60,35 @@ def sort_by_cohort(filename):
         ex. fall_15 = ["Colin Creevey", "Dennis Creevey", "Seamus Finnigan", ""Hermione Granger", ... ]
         ex. all_students = [["Colin Creevey", "Dennis Creevey", "Seamus Finnigan", ...],
         ["Lee Jordan", "Andrew Kirke", "Neville Longbottom", ...],
-        ["Cormac McLaggen", "Parvati Patil", "Jimmy Peakes", ...], 
+        ["Cormac McLaggen", "Parvati Patil", "Jimmy Peakes", ...],
         ["Euan Abercrombie", "Katie Bell", "Lavender Brown", ...]]
 
     """
 
     lines = [line.rstrip() for line in open(filename)]
-    # using "info = open(filename)" and then using "info" in the 
-    # for loops of the various list comprehensions doesn't work because...
-    # I have no idea 
-    
-    winter_16 = sorted([get_name(line) for line in lines if get_cohort(line) == "Winter 2016"])
-    spring_16 = sorted([get_name(line) for line in lines if get_cohort(line) == "Spring 2016"])
-    summer_16 = sorted([get_name(line) for line in lines if get_cohort(line) == "Summer 2016"])
-    fall_15 = sorted([get_name(line) for line in lines if get_cohort(line) == "Fall 2015"])
 
-    all_students = [fall_15, 
-                    winter_16, 
-                    spring_16, 
+       # info = open(filename)  # for some reason, this object "disapears" once it's been looped over
+    # using "info = open(filename)" and then using "info" instead of "lines" in the
+    # for loops of the various list comprehensions doesn't work because...
+    # I have no idea
+
+    fall_15 = sorted([get_full_name(line) for line in lines if get_cohort(line) == "Fall 2015"])
+
+    winter_16 = sorted([get_full_name(line) for line in lines if get_cohort(line) == "Winter 2016"])
+
+    spring_16 = sorted([get_full_name(line) for line in lines if get_cohort(line) == "Spring 2016"])
+
+    summer_16 = sorted([get_full_name(line) for line in lines if get_cohort(line) == "Summer 2016"])
+
+    ghosts = sorted([get_full_name(line) for line in lines if get_cohort(line) == "G"])
+
+    all_students = [fall_15,
+                    winter_16,
+                    spring_16,
                     summer_16,
+                    ghosts,
                     ]
 
-    ghosts = sorted([get_name(line) for line in lines if get_cohort(line) == "G"])
- 
     return all_students
 
 
@@ -103,8 +115,11 @@ def students_by_house(filename):
 
     """
 
-    all_students = []
-    gryffindor = []
+    lines = [line.rstrip() for line in open(filename)]
+
+
+
+    gryffindor = [] 
     hufflepuff = []
     slytherin = []
     dumbledores_army = []
@@ -112,6 +127,18 @@ def students_by_house(filename):
     ghosts = []
     instructors = []
 
+    all_students = {'hufflepuff': [],
+                    'gryffindor': [],
+                    'ravenclaw': [],
+                    'slytherin': [],
+                    'dumbledores_army': [],
+                    'ghosts': [],
+                    'instructors': [],
+                    }
+
+    for cohort in all_students:
+        if cohort == 'ghosts' or cohort == 'instructors':
+            all_students[cohort] = sorted([get_last_name(line) for line in lines if get_cohort(line).lower() == cohort])
     # Code goes here
 
     return all_students
@@ -201,8 +228,8 @@ def find_house_members_by_student_name(student_list):
 # Here is some useful code to run these functions!
 
 # print unique_houses("cohort_data.txt")
-print sort_by_cohort("cohort_data.txt")
-# print hogwarts_by_house("cohort_data.txt")
+# print sort_by_cohort("cohort_data.txt")
+print students_by_house("cohort_data.txt")
 # all_students_data = all_students_tuple_list("cohort_data.txt")
 # print all_students_data
 # find_cohort_by_student_name(all_students_data)
